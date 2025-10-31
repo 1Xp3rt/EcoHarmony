@@ -1,4 +1,4 @@
- // Smooth scrolling
+// Smooth scrolling
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', e => {
         e.preventDefault();
@@ -31,49 +31,107 @@ document.querySelectorAll('.feature-card, .tip-card, .date-card').forEach(card =
     observer.observe(card);
 });
 
-
+// Add event listeners for Learn More buttons
+document.addEventListener('DOMContentLoaded', function() {
+    // Add click events to all Learn More buttons
+    const learnMoreButtons = document.querySelectorAll('.feature-content .btn');
+    
+    learnMoreButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            e.preventDefault();
+            const featureCard = this.closest('.feature-card');
+            const featureTitle = featureCard.querySelector('h3').textContent;
+            
+            // Show different information based on which feature card was clicked
+            if (featureTitle === "Energy-Efficient Systems") {
+                showInfoAlert(
+                    "Energy-Efficient Computing Systems",
+                    `<h4>Key Strategies:</h4>
+                    <ul>
+                        <li><strong>Server Virtualisation:</strong> Consolidate multiple servers onto fewer physical machines to reduce energy consumption by up to 80%</li>
+                        <li><strong>Dynamic Voltage Scaling:</strong> Adjust processor voltage based on workload to save power during low-usage periods</li>
+                        <li><strong>Efficient Cooling Solutions:</strong> Implement liquid cooling, hot/cold aisle containment, and free cooling techniques</li>
+                        <li><strong>Power Management:</strong> Use advanced power management features in hardware and optimise software for energy efficiency</li>
+                        <li><strong>Renewable Energy:</strong> Power data centers with solar, wind, or other renewable energy sources</li>
+                    </ul>
+                    <p><strong>Impact:</strong> Data centers consume about 1% of global electricity. Proper optimisation can reduce this by 30-50%.</p>`
+                );
+            } else if (featureTitle === "Green Software Development") {
+                showInfoAlert(
+                    "Green Software Development Practices",
+                    `<h4>Sustainable Coding Techniques:</h4>
+                    <ul>
+                        <li><strong>Algorithm Optimisation:</strong> Choose efficient algorithms that require fewer computational resources</li>
+                        <li><strong>Energy-Efficient Languages:</strong> Use languages like C, Rust, or Go for performance-critical applications</li>
+                        <li><strong>Code Minification:</strong> Reduce file sizes for faster loading and less energy consumption</li>
+                        <li><strong>Lazy Loading:</strong> Load resources only when needed to reduce initial energy footprint</li>
+                        <li><strong>Caching Strategies:</strong> Implement smart caching to reduce redundant computations and database queries</li>
+                        <li><strong>Asynchronous Processing:</strong> Use non-blocking operations to optimise resource utilisation</li>
+                    </ul>
+                    <p><strong>Best Practice:</strong> A 1MB reduction in page size can save approximately 0.5 kWh per 10,000 page views.</p>`
+                );
+            } else if (featureTitle === "E-Waste Management") {
+                showInfoAlert(
+                    "Sustainable E-Waste Management",
+                    `<h4>Circular Economy Approaches:</h4>
+                    <ul>
+                        <li><strong>Proper Recycling:</strong> Follow WEEE directive guidelines for electronic waste disposal</li>
+                        <li><strong>Component Reuse:</strong> Salvage working components from old devices for repairs or new builds</li>
+                        <li><strong>Refurbishment Programs:</strong> Extend device lifespan through professional refurbishment</li>
+                        <li><strong>Take-Back Systems:</strong> Implement manufacturer take-back programs for end-of-life equipment</li>
+                        <li><strong>Material Recovery:</strong> Extract precious metals (gold, silver, copper) from electronic waste</li>
+                        <li><strong>Secure Data Destruction:</strong> Ensure proper data sanitisation before device disposal</li>
+                    </ul>
+                    <p><strong>Global Impact:</strong> Only 17.4% of e-waste is properly recycled worldwide. Improving this could recover $57 billion in raw materials annually.</p>`
+                );
+            }
+        });
+    });
+});
 
 // ===== Mini Week Calendar =====
 let currentWeek = 0; // 0 means current week, -1 means previous week, 1 means next week, etc.
 let selectedDate = null;
 let draggedChallenge = null;
 
-// Sample challenges data
+// Sample challenges data - Updated for computing sustainability
 const challengesData = {
     "2025-06-09": [
-        { id: 1, title: "Meatless Monday", icon: "fas fa-carrot", points: 15, completed: false }
+        { id: 1, title: "Optimise code algorithms", icon: "fas fa-code", points: 15, completed: false }
     ],
     "2025-06-10": [
-        { id: 3, title: "Bike to work", icon: "fas fa-bicycle", points: 20, completed: false },
-        { id: 4, title: "Use reusable coffee cup", icon: "fas fa-coffee", points: 10, completed: true }
+        { id: 3, title: "Energy-efficient coding", icon: "fas fa-bolt", points: 20, completed: false },
+        { id: 4, title: "Server power management", icon: "fas fa-server", points: 10, completed: true }
     ],
     "2025-06-11": [
-        { id: 5, title: "Zero plastic day", icon: "fas fa-ban", points: 25, completed: false }
+        { id: 5, title: "E-waste audit", icon: "fas fa-recycle", points: 25, completed: false }
     ],
     "2025-06-12": [
-        { id: 7, title: "Energy saving mode", icon: "fas fa-bolt", points: 15, completed: true }
+        { id: 7, title: "Green hosting research", icon: "fas fa-cloud", points: 15, completed: true }
     ],
     "2025-06-13": [
-        { id: 9, title: "Digital detox evening", icon: "fas fa-mobile-alt", points: 10, completed: false }
+        { id: 9, title: "Digital carbon footprint", icon: "fas fa-laptop", points: 10, completed: false }
     ],
     "2025-06-14": [
-        { id: 11, title: "Beach cleanup", icon: "fas fa-trash", points: 30, completed: false }
+        { id: 11, title: "Sustainable UX design", icon: "fas fa-palette", points: 30, completed: false }
     ],
     "2025-06-15": [
-        { id: 13, title: "Planetary diet", icon: "fas fa-leaf", points: 20, completed: false }
+        { id: 13, title: "Green software architecture", icon: "fas fa-leaf", points: 20, completed: false }
     ]
 };
 
-// Available challenge cards
+// Available challenge cards - Updated for computing sustainability
 const availableChallenges = [
-    { id: 101, title: "5-min shower", icon: "fas fa-shower", points: 15, description: "Limit your shower to 5 minutes to save water" },
-    { id: 102, title: "Public transport", icon: "fas fa-bus", points: 20, description: "Use public transport instead of driving" },
-    { id: 103, title: "Local produce", icon: "fas fa-shopping-basket", points: 15, description: "Buy only locally produced food" },
-    { id: 104, title: "Repair something", icon: "fas fa-tools", points: 10, description: "Repair an item instead of replacing it" },
-    { id: 105, title: "Plant a tree", icon: "fas fa-tree", points: 30, description: "Plant a tree in your community" },
-    { id: 106, title: "Compost food", icon: "fas fa-recycle", points: 15, description: "Compost your food waste" },
-    { id: 107, title: "Carpool", icon: "fas fa-car", points: 15, description: "Share a ride with others" },
-    { id: 108, title: "Meat-free day", icon: "fas fa-carrot", points: 20, description: "Have a day without meat products" }
+    { id: 101, title: "Code optimisation", icon: "fas fa-code", points: 15, description: "Refactor code to reduce energy consumption" },
+    { id: 102, title: "Green hosting", icon: "fas fa-server", points: 20, description: "Switch to eco-friendly web hosting" },
+    { id: 103, title: "E-waste recycling", icon: "fas fa-recycle", points: 15, description: "Properly recycle old electronic devices" },
+    { id: 104, title: "Hardware repair", icon: "fas fa-tools", points: 10, description: "Repair computer hardware instead of replacing" },
+    { id: 105, title: "Energy monitoring", icon: "fas fa-chart-line", points: 30, description: "Monitor and reduce device energy usage" },
+    { id: 106, title: "Cloud optimisation", icon: "fas fa-cloud", points: 15, description: "Optimise cloud resource usage" },
+    { id: 107, title: "Remote work day", icon: "fas fa-home", points: 15, description: "Work remotely to reduce commute emissions" },
+    { id: 108, title: "Digital cleanup", icon: "fas fa-trash", points: 20, description: "Clean up unnecessary files and emails" },
+    { id: 109, title: "Sustainable coding", icon: "fas fa-laptop-code", points: 25, description: "Use energy-efficient programming practices" },
+    { id: 110, title: "Data center efficiency", icon: "fas fa-database", points: 30, description: "Research and implement data center optimisations" }
 ];
 
 // Initialize the calendar
@@ -241,8 +299,8 @@ function showChallengeDetails(dateString) {
     
     const detailsContainer = document.getElementById('challenge-details');
     detailsContainer.innerHTML = `
-        <h3>Challenges for ${formattedDate}</h3>
-        <p>Complete these sustainability challenges to earn eco-points and make a positive impact!</p>
+        <h3>Green Computing Challenges for ${formattedDate}</h3>
+        <p>Complete these sustainable computing challenges to reduce your digital carbon footprint and earn eco-points!</p>
         <div class="progress-bar">
             <div class="progress" style="width: ${progressPercentage}%"></div>
         </div>
@@ -363,7 +421,7 @@ function addChallengeToDate(dateString, challenge) {
     
     showSuccessAlert(
         "Challenge Added!",
-        `"${challenge.title}" has been added to your challenges for ${new Date(dateString).toLocaleDateString()}.`
+        `"${challenge.title}" has been added to your green computing challenges for ${new Date(dateString).toLocaleDateString()}.`
     );
 }
 
@@ -383,7 +441,7 @@ function toggleChallenge(dateString, challengeId) {
             if (challenge.completed) {
                 showSuccessAlert(
                     "Challenge Completed!",
-                    `Great job completing "${challenge.title}"! You've earned ${challenge.points} eco-points.`
+                    `Great job completing "${challenge.title}"! You've earned ${challenge.points} eco-points and reduced your digital carbon footprint.`
                 );
             }
         }
@@ -405,7 +463,7 @@ function removeChallenge(dateString, challengeId) {
             
             showInfoAlert(
                 "Challenge Removed",
-                `"${removedChallenge.title}" has been removed from your challenges for ${new Date(dateString).toLocaleDateString()}.`
+                `"${removedChallenge.title}" has been removed from your green computing challenges for ${new Date(dateString).toLocaleDateString()}.`
             );
         }
     }
